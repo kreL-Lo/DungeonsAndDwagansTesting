@@ -1,0 +1,37 @@
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import org.bson.Document;
+
+public class Main {
+    public static void main(String[] args){
+        MongoClientURI uri = new MongoClientURI(
+                "mongodb://admin:admin@dungeons-shard-00-00-qmexh.mongodb.net:27017,dungeons-shard-00-01-qmexh.mongodb.net:27017,dungeons-shard-00-02-qmexh.mongodb.net:27017/test?ssl=true&replicaSet=Dungeons-shard-0&authSource=admin&retryWrites=true&w=majority");
+
+        MongoClient mongoClient = new MongoClient(uri);
+        MongoDatabase database = mongoClient.getDatabase("test");
+        //database.createCollection("sampleCollection");
+        MongoCollection<Document> collection = database.getCollection("sampleCollection");
+        System.out.println(collection.countDocuments());
+        Document myDoc = collection.find().first();
+        System.out.println(myDoc.toJson());
+
+        // Retrieving a collection
+        /*
+        MongoCollection<Document> collection = database.getCollection("sampleCollection");
+        System.out.println("Collection sampleCollection selected successfully");
+        Document document = new Document("title", "MongoDB")
+                .append("description", "database")
+                .append("likes", 100)
+                .append("url", "http://www.tutorialspoint.com/mongodb/")
+                .append("by", "tutorials point");
+
+        //Inserting document into the collection
+        collection.insertOne(document);
+        System.out.println("Document inserted successfully");*/
+
+
+    }
+}
